@@ -3,11 +3,14 @@ package ua.com.edada.culinarynotes.recipe;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import ua.com.edada.culinarynotes.exception.GlobalExceptionHandler;
 import ua.com.edada.culinarynotes.recipe.dto.RecipeCreateRequest;
 import ua.com.edada.culinarynotes.recipe.dto.RecipeUpdateRequest;
 
@@ -15,31 +18,38 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(RecipeController.class)
+@ExtendWith(MockitoExtension.class)
 class RecipeControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
+    @Mock
     private RecipeService recipeService;
+
+    @InjectMocks
+    private RecipeController recipeController;
+
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     private Recipe recipe1;
     private Recipe recipe2;
 
     @BeforeEach
     void setUp() {
+        // Initialize MockMvc
+        mockMvc = MockMvcBuilders
+                .standaloneSetup(recipeController)
+                .setControllerAdvice(new GlobalExceptionHandler())
+                .build();
+
         // Create test recipes
         recipe1 = Recipe.builder()
                 .id(1L)

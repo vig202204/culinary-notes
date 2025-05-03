@@ -18,7 +18,7 @@ import java.util.Map;
 
 @ControllerAdvice
 @Slf4j
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
     public record ErrorResponse(
             LocalDateTime timestamp,
@@ -45,12 +45,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex, 
-            org.springframework.http.HttpHeaders headers,
-            org.springframework.http.HttpStatusCode status,
-            WebRequest request) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex) {
         log.error("Validation error: {}", ex.getMessage());
 
         Map<String, String> errors = new HashMap<>();
