@@ -33,7 +33,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
             ResourceNotFoundException ex, WebRequest request) {
         log.error("Resource not found exception: {}", ex.getMessage());
-        
+
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.NOT_FOUND.value(),
@@ -41,23 +41,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 ex.getMessage(),
                 request.getDescription(false)
         );
-        
+
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, 
+            org.springframework.http.HttpHeaders headers,
+            org.springframework.http.HttpStatusCode status,
+            WebRequest request) {
         log.error("Validation error: {}", ex.getMessage());
-        
+
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        
+
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
@@ -66,14 +68,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(
             ConstraintViolationException ex) {
         log.error("Constraint violation: {}", ex.getMessage());
-        
+
         Map<String, String> errors = new HashMap<>();
         ex.getConstraintViolations().forEach(violation -> {
             String fieldName = violation.getPropertyPath().toString();
             String errorMessage = violation.getMessage();
             errors.put(fieldName, errorMessage);
         });
-        
+
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
@@ -82,7 +84,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleGlobalException(
             Exception ex, WebRequest request) {
         log.error("Unhandled exception: ", ex);
-        
+
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -90,7 +92,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 "An unexpected error occurred",
                 request.getDescription(false)
         );
-        
+
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
