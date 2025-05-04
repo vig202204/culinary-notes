@@ -1,6 +1,8 @@
                              Guidelines.md :
 
-# Junie Guidelines for Spring Boot Development
+# Junie Guidelines for Spring Boot Development (v. 1.3)
+                                    Many thanks to the tutorial video by Dan Vega 
+                                    (https://youtu.be/fcbSG8lm7So?si=MRR4wJa1sjXz_iXo)
 
 This file contains guidelines for Junie to follow when working on this Spring Boot project. Adhering to these standards ensures consistence
 
@@ -43,9 +45,6 @@ ua.com.edada.culinarynotes
   │    └── ...
   ├── category/
   │    ├── CategoryController.java
-  │    └── ...
-  ├── user/
-  │    ├── UserController.java
   │    └── ...
   ├── file/
   │    ├── FileStorageService.java
@@ -110,11 +109,20 @@ ua.com.edada.culinarynotes
     1. Use id's (ID operation, ID user and etc.).
     2. Add time.
     3. Add context operation. Check level of log before create log-message ex `if (log.isDebugEnabled()){}`
+* Use rotation log-files
+* Differentiate log-files as:
+  * Log-level Loggers`INFO_FILE`, `ERROR_FILE`, `DEBUG_FILE`, `CONSOLE`, `JSON_FILE`
+  * Package-Specific Loggers: `RECIPE_FILE`,`USER_FILE`,`INGRIDIENT_FILE`, `CATEGORY_FILE`, `SERVICE_FILE`, `REPOSITORY_FILE`.
+  * Hibernate SQL settings: `SQL_FILE` using `org.hibernate.SQL`, `org.hibernate.type.descriptor.sql`, 
 
 ## Testing
 
-*   **Unit Tests:** Write unit tests for services and components using JUnit 5 and Mockito.
-*   **Integration Tests:** Write integration tests using '@SpringBootTest'. For database interactions, consider using Testcontainers or an in
+*   **Unit Tests:** Write unit tests for services and components using:
+  * *JUnit 5* 
+  * *Mockito* 
+  * *AssertJ*.
+*   **Integration Tests:** Write integration tests using '@SpringBootTest'. For database interactions, consider using Testcontainers.
+*   **
 *   **Test Location:** Place tests in the standard 'src/test/java' directory, mirroring the source package structure.
 
 ## General Code Quality
