@@ -1,4 +1,4 @@
-package edada.com.ua.culinarynotes;
+package ua.com.edada.culinarynotes;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,5 +9,4 @@ class CulinaryNotesApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
