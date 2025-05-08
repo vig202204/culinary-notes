@@ -131,7 +131,7 @@
 
     <!-- Logger configurations -->
     <logger name="ua.com.edada.culinarynotes" level="DEBUG" additivity="false">
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
         <appender-ref ref="INFO_FILE" />
         <appender-ref ref="ERROR_FILE" />
         <appender-ref ref="DEBUG_FILE" />
@@ -140,61 +140,61 @@
     <!-- Controller loggers -->
     <logger name="ua.com.edada.culinarynotes.recipe.RecipeController" level="DEBUG" additivity="false">
         <appender-ref ref="CONTROLLER_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
 
     <!-- Service loggers -->
     <logger name="ua.com.edada.culinarynotes.recipe.RecipeService" level="DEBUG" additivity="false">
         <appender-ref ref="SERVICE_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
     <logger name="ua.com.edada.culinarynotes.user.UserService" level="DEBUG" additivity="false">
         <appender-ref ref="SERVICE_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
     <logger name="ua.com.edada.culinarynotes.category.CategoryService" level="DEBUG" additivity="false">
         <appender-ref ref="SERVICE_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
     <logger name="ua.com.edada.culinarynotes.ingredient.IngredientService" level="DEBUG" additivity="false">
         <appender-ref ref="SERVICE_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
     <logger name="ua.com.edada.culinarynotes.file.FileStorageService" level="DEBUG" additivity="false">
         <appender-ref ref="SERVICE_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
 
     <!-- Repository loggers -->
     <logger name="ua.com.edada.culinarynotes.recipe.RecipeRepository" level="DEBUG" additivity="false">
         <appender-ref ref="REPOSITORY_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
     <logger name="ua.com.edada.culinarynotes.user.UserRepository" level="DEBUG" additivity="false">
         <appender-ref ref="REPOSITORY_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
     <logger name="ua.com.edada.culinarynotes.category.CategoryRepository" level="DEBUG" additivity="false">
         <appender-ref ref="REPOSITORY_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
     <logger name="ua.com.edada.culinarynotes.ingredient.IngredientRepository" level="DEBUG" additivity="false">
         <appender-ref ref="REPOSITORY_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
 
     <!-- Hibernate SQL loggers -->
     <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
         <appender-ref ref="SQL_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
     <logger name="org.hibernate.type.descriptor.sql" level="TRACE" additivity="false">
         <appender-ref ref="SQL_FILE" />
-<!--        <appender-ref ref="Console" />-->
+        <appender-ref ref="Console" />
     </logger>
 
     <!-- Root logger -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="Console" />
         <appender-ref ref="INFO_FILE" />
         <appender-ref ref="ERROR_FILE" />
