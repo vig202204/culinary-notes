@@ -109,11 +109,31 @@ ua.com.edada.culinarynotes
     1. Use id's (ID operation, ID user and etc.).
     2. Add time.
     3. Add context operation. Check level of log before create log-message ex `if (log.isDebugEnabled()){}`
-* Use rotation log-files
-* Differentiate log-files as:
-  * Log-level Loggers`INFO_FILE`, `ERROR_FILE`, `DEBUG_FILE`, `CONSOLE`, `JSON_FILE`
-  * Package-Specific Loggers: `RECIPE_FILE`,`USER_FILE`,`INGRIDIENT_FILE`, `CATEGORY_FILE`, `SERVICE_FILE`, `REPOSITORY_FILE`.
-  * Hibernate SQL settings: `SQL_FILE` using `org.hibernate.SQL`, `org.hibernate.type.descriptor.sql`, 
+* Use:
+  - application.yml for high-level settings.
+    - use `hibernate.show_sql: false`, `hibernate.format_sql: true`,
+    - minimum output to console.
+  -logback-spring.xml for low-level settings containing detailed customization:
+    - rotation,
+    - separate log-files for:
+      - INFO,
+      - ERROR,
+      - DEBUG,
+      - controller,
+      - service,
+      - repository,
+      - SQL (Hibernate). Use  `SQL_FILE` using `org.hibernate.SQL`, `org.hibernate.type.descriptor.sql`.
+
+  [//]: # (  - JSON log,)
+
+[//]: # (* Use rotation log-files)
+
+[//]: # (* Differentiate log-files as:)
+
+[//]: # (  * Log-level Loggers`INFO_FILE`, `ERROR_FILE`, `DEBUG_FILE`, `CONSOLE`, `JSON_FILE`)
+
+[//]: # (  * Package-Specific Loggers: `RECIPE_FILE`,`USER_FILE`,`INGRIDIENT_FILE`, `CATEGORY_FILE`, `SERVICE_FILE`, `REPOSITORY_FILE`.)
+[//]: # (  * Hibernate SQL settings: `SQL_FILE` using `org.hibernate.SQL`, `org.hibernate.type.descriptor.sql`, )
 
 ## Testing
 
@@ -124,6 +144,36 @@ ua.com.edada.culinarynotes
 *   **Integration Tests:** Write integration tests using '@SpringBootTest'. For database interactions, consider using Testcontainers.
 *   **
 *   **Test Location:** Place tests in the standard 'src/test/java' directory, mirroring the source package structure.
+* Write tests using *Feature-based pattern*:
+* * **Example:**
+* * *  **PREFERRED  THIS (Feature-based pattern):**
+```
+└── test
+    └── java
+        └── ua.com.edada.culinarynotes
+            ├── recipe/
+            │   ├── RecipeControllerTest.java
+            │   ├── RecipeServiceTest.java
+            │   ├── RecipeRepositoryTest.java
+            │   └── RecipeIntegrationTest.java     # Optionally: full flow for recipe
+            ├── user/
+            │   ├── UserControllerTest.java
+            │   ├── UserServiceTest.java
+            │   └── UserRepositoryTest.java
+            ├── ingredient/
+            │   └── IngredientControllerTest.java
+            ├── category/
+            │   └── CategoryControllerTest.java
+            ├── file/
+            │   └── FileStorageServiceTest.java
+            ├── common/
+            │   ├── exception/
+            │   │   └── GlobalExceptionHandlerTest.java
+            │   └── util/
+            │       └── DateUtilTest.java          # Ex. if present
+            └── integration/
+                └── RecipeFullFlowTest.java        # Optional — General Integration Tests
+```
 
 ## General Code Quality
 
